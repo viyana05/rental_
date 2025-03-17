@@ -59,30 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Menghitung total pembayaran setelah dikurangi diskon dan ditambah biaya supir
         $total_bayar = $total_harga_mobil - $diskon + $biaya_supir;
     }
-
-    // Jika tombol "Pesan" ditekan, tampilkan alert dan redirect
-    if (isset($_POST['simpan'])) {
-        $diskon = ($durasi >= 3) ? 0.1 * $total_harga_mobil : 0;
-        $check = $supir == "checked" ? 'Ya' : 'Tidak';
-        $nama = $_POST['nama'];
-        $identitas = $_POST['identitas'];
-        $gender = $_POST['gender'];
-        $detail_pesanan = "Pesanan Berhasil!\n\n"
-            . "Nama: $nama\n"
-            . "Nomor Identitas: $identitas\n"
-            . "Jenis Kelamin: $gender\n"
-            . "Jenis Mobil: $pilihmobil \n"
-            . "Supir: $check\n"
-            . "Durasi:$durasi \n"
-            . "Diskon: $diskon  \n"
-            . "Total Bayar: Rp " . number_format($total_bayar, 0, ',', '.');
-
-        echo "<script>
-            alert(`$detail_pesanan`);
-            window.location.href = 'index.php';
-        </script>";
-        exit();
-    }
 }
 ?>
 
@@ -159,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button type="submit" class="btn btn-primary">Hitung Total</button>
 
                     <!-- Tombol Simpan (akan mengarahkan ke hasil.php) -->
-                    <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
+                    <button type="submit" formaction="hasil.php" class="btn btn-primary">Simpan</button>
 
                     <!-- Tombol Reset -->
                     <button type="reset" class="btn btn-danger">Cancel</button>
