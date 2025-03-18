@@ -1,6 +1,6 @@
 <?php
-// Mengambil nilai 'indexarray' dari URL
-$id = $_GET['indexarray'];
+// Periksa apakah 'indexarray' tersedia di URL, jika tidak, set default ke 0
+$id = isset($_GET['indexarray']) && is_numeric($_GET['indexarray']) ? (int) $_GET['indexarray'] : 0;
 
 // Daftar mobil beserta harga sewanya per hari
 $rentals = [
@@ -9,11 +9,17 @@ $rentals = [
     ["CRV", 700000, "crv.jpeg"]
 ];
 
+// Periksa apakah $id dalam rentang array yang valid
+if (!isset($rentals[$id])) {
+    $id = 0; // Set ke default jika tidak valid
+}
+
 // Menentukan mobil yang dipilih berdasarkan input form atau default dari daftar berdasarkan indexarray
 $pilih_mobil = $_POST['car'] ?? $rentals[$id][0];
 
-// Mendapatkan harga mobil yang dipilih menggunakan array_column untuk memetakan nama ke harga
-$pilih_harga = array_column($rentals, 1, 0)[$pilih_mobil];
+// Mendapatkan harga mobil yang dipilih
+$pilih_harga = array_column($rentals, 1, 0)[$pilih_mobil] ?? 0;
+
 
 // Mengecek apakah opsi supir dipilih oleh pengguna
 $supir = isset($_POST['supir']);
